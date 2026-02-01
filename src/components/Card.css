@@ -1,0 +1,118 @@
+.playing-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.playing-card.small {
+  width: 50px;
+  height: 70px;
+  border-radius: 6px;
+}
+
+.playing-card.medium {
+  width: 70px;
+  height: 100px;
+}
+
+.playing-card.large {
+  width: 100px;
+  height: 140px;
+  border-radius: 12px;
+}
+
+.playing-card.animate {
+  animation: cardDeal 0.5s ease;
+}
+
+@keyframes cardDeal {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) rotateY(90deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateY(0);
+  }
+}
+
+.card-front {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.card-corner {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.top-left {
+  top: 4px;
+  left: 6px;
+}
+
+.bottom-right {
+  bottom: 4px;
+  right: 6px;
+  transform: rotate(180deg);
+}
+
+.card-rank {
+  font-weight: 700;
+}
+
+.small .card-rank { font-size: 0.75rem; }
+.medium .card-rank { font-size: 0.875rem; }
+.large .card-rank { font-size: 1.25rem; }
+
+.card-suit {
+  font-size: 0.75rem;
+}
+
+.small .card-suit { font-size: 0.625rem; }
+.large .card-suit { font-size: 1rem; }
+
+.card-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card-suit-large {
+  font-size: 2rem;
+}
+
+.small .card-suit-large { font-size: 1.25rem; }
+.large .card-suit-large { font-size: 3rem; }
+
+/* Face down card */
+.playing-card.face-down {
+  background: #1e40af;
+}
+
+.card-back {
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+}
+
+.card-pattern {
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5px,
+    rgba(255, 255, 255, 0.1) 5px,
+    rgba(255, 255, 255, 0.1) 10px
+  );
+}

@@ -1,0 +1,54 @@
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timer-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.timer-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.125rem;
+}
+
+.timer-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s;
+}
+
+.timer-unit {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.timer.low .timer-value {
+  color: var(--danger);
+  animation: pulse 0.5s infinite;
+}
+
+.timer-bar {
+  width: 100%;
+  max-width: 200px;
+  height: 4px;
+  background: var(--surface-light);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.timer-progress {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: width 0.1s linear, background 0.2s;
+}
+
+.timer.low .timer-progress {
+  background: var(--danger);
+}

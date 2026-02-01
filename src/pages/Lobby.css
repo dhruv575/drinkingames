@@ -1,0 +1,149 @@
+.lobby-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+.lobby-content {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.lobby-code-section {
+  text-align: center;
+}
+
+.code-label {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.lobby-code {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  transition: transform 0.2s;
+}
+
+.lobby-code:hover {
+  transform: scale(1.02);
+}
+
+.lobby-code:active {
+  transform: scale(0.98);
+}
+
+.code-text {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: white;
+}
+
+.copy-hint {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.section-title {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.game-selection {
+  flex: 1;
+}
+
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.game-card {
+  background: var(--surface);
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: left;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.game-card:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: var(--surface-light);
+}
+
+.game-card:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.game-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.game-description {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.game-requirement {
+  font-size: 0.75rem;
+  color: var(--warning);
+  margin-top: 0.5rem;
+}
+
+.waiting-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.waiting-indicator {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.waiting-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.waiting-dots span {
+  width: 12px;
+  height: 12px;
+  background: var(--primary);
+  border-radius: 50%;
+  animation: bounce 1.4s ease-in-out infinite;
+}
+
+.waiting-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.waiting-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
