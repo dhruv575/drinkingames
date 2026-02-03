@@ -1,0 +1,286 @@
+.multiply-game {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+.multiply-game .game-content {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.multiply-game .phase-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Stats bar */
+.game-stats {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: 12px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-value.time {
+  color: var(--primary);
+}
+
+.stat-value.correct {
+  color: var(--success);
+}
+
+.stat-value.wrong {
+  color: var(--danger);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Progress bar */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--surface-light);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* Question card */
+.question-card {
+  width: 100%;
+  padding: 2rem;
+  background: var(--surface);
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.2s;
+  border: 3px solid transparent;
+}
+
+.question-card.correct {
+  border-color: var(--success);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.question-card.wrong,
+.question-card.penalty {
+  border-color: var(--danger);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.num {
+  color: var(--text);
+}
+
+.operator {
+  color: var(--text-muted);
+}
+
+.equals {
+  color: var(--text-muted);
+  margin-left: 0.5rem;
+}
+
+.answer-display {
+  min-width: 2ch;
+  color: var(--primary);
+  border-bottom: 3px solid var(--primary);
+  padding: 0 0.25rem;
+}
+
+.feedback {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  animation: fadeIn 0.2s ease;
+}
+
+.correct-feedback {
+  color: var(--success);
+}
+
+.wrong-feedback {
+  color: var(--danger);
+}
+
+.penalty-timer {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  animation: pulse 1s infinite;
+}
+
+/* Hidden input for capturing keyboard/numpad */
+.hidden-input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* Results */
+.multiply-game .results-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.5s ease;
+  padding-bottom: 2rem;
+  width: 100%;
+}
+
+.multiply-game .result-banner {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+}
+
+.multiply-game .result-banner.loser {
+  background: linear-gradient(135deg, var(--danger), #b91c1c);
+}
+
+.multiply-game .result-banner.safe {
+  background: linear-gradient(135deg, var(--success), #15803d);
+}
+
+.multiply-game .result-banner h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.multiply-game .loser-section {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.multiply-game .loser-section h3 {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.multiply-game .loser-names {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.multiply-game .all-scores {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.multiply-game .all-scores h3 {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.multiply-game .score-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: var(--surface-light);
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.multiply-game .score-result:last-child {
+  margin-bottom: 0;
+}
+
+.multiply-game .score-result.loser {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid var(--danger);
+}
+
+.multiply-game .score-result.is-you {
+  border: 1px solid var(--primary);
+}
+
+.multiply-game .score-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.multiply-game .score-player {
+  font-weight: 500;
+}
+
+.multiply-game .score-detail {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.multiply-game .score-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.multiply-game .score-value.positive {
+  color: var(--success);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

@@ -4,17 +4,29 @@ import Header from '../../components/Header';
 import Timer from '../../components/Timer';
 import './DrawingGame.css';
 
+const COLORS = [
+  '#000000', // Black
+  '#FFFFFF', // White
+  '#EF4444', // Red
+  '#F97316', // Orange
+  '#EAB308', // Yellow
+  '#22C55E', // Green
+  '#3B82F6', // Blue
+  '#8B5CF6', // Purple
+];
+
 export default function DrawingGame({ player, lobby, isHost, onEndGame }) {
   const { gamePhase, gameData, results, sendGameAction } = useGame();
   const [word, setWord] = useState('');
   const [wordSubmitted, setWordSubmitted] = useState(false);
   const [drawingSubmitted, setDrawingSubmitted] = useState(false);
   const [currentVote, setCurrentVote] = useState(null);
+  const [selectedColor, setSelectedColor] = useState('#000000');
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
 
-  // Canvas setup
+  // Canvas setup - only runs when entering drawing phase
   useEffect(() => {
     if (gamePhase === 'drawing' && canvasRef.current) {
       const canvas = canvasRef.current;
@@ -37,6 +49,14 @@ export default function DrawingGame({ player, lobby, isHost, onEndGame }) {
       ctx.lineJoin = 'round';
     }
   }, [gamePhase]);
+
+  // Update stroke color when selectedColor changes
+  useEffect(() => {
+    if (canvasRef.current) {
+      const ctx = canvasRef.current.getContext('2d');
+      ctx.strokeStyle = selectedColor;
+    }
+  }, [selectedColor]);
 
   const getPos = (e) => {
     const canvas = canvasRef.current;
@@ -123,10 +143,10 @@ export default function DrawingGame({ player, lobby, isHost, onEndGame }) {
     }
   };
 
-  // Reset vote when viewing changes
+  // Reset vote when viewing index changes
   useEffect(() => {
     setCurrentVote(null);
-  }, [gameData.currentDrawing?.drawingPlayerId]);
+  }, [gameData.currentDrawing?.index]);
 
   const renderPhase = () => {
     switch (gamePhase) {
@@ -139,7 +159,7 @@ export default function DrawingGame({ player, lobby, isHost, onEndGame }) {
             </div>
 
             {gameData.timeLimit && (
-              <Timer duration={gameData.timeLimit} label="Time remaining" />
+              <Timer key="word-submission" duration={gameData.timeLimit} label="Time remaining" />
             )}
 
             {!wordSubmitted ? (
@@ -181,8 +201,20 @@ export default function DrawingGame({ player, lobby, isHost, onEndGame }) {
             </div>
 
             {gameData.timeLimit && (
-              <Timer duration={gameData.timeLimit} label="Time remaining" />
+              <Timer key="drawing" duration={gameData.timeLimit} label="Time remaining" />
             )}
+
+            <div className="color-picker">
+              {COLORS.map((color) => (
+                <button
+                  key={color}
+                  className={`color-btn ${selectedColor === color ? 'selected' : ''}`}
+                  style={{ backgroundColor: color }}
+                  onClick={() => setSelectedColor(color)}
+                  disabled={drawingSubmitted}
+                />
+              ))}
+            </div>
 
             <div className="canvas-container">
               <canvas

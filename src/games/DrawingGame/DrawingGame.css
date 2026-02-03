@@ -73,6 +73,50 @@
   gap: 1rem;
 }
 
+.color-picker {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.color-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.color-btn:hover:not(:disabled) {
+  transform: scale(1.15);
+}
+
+.color-btn.selected {
+  border-color: var(--primary);
+  transform: scale(1.1);
+}
+
+.color-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* White color needs a visible border */
+.color-btn[style*="rgb(255, 255, 255)"],
+.color-btn[style*="#FFFFFF"],
+.color-btn[style*="#ffffff"] {
+  border-color: var(--border);
+}
+
+.color-btn[style*="rgb(255, 255, 255)"].selected,
+.color-btn[style*="#FFFFFF"].selected,
+.color-btn[style*="#ffffff"].selected {
+  border-color: var(--primary);
+}
+
 .canvas-container {
   width: 100%;
   aspect-ratio: 1;

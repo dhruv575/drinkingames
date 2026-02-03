@@ -38,6 +38,12 @@ export function GameProvider({ children }) {
       if (data.word) {
         setGameData(prev => ({ ...prev, word: data.word }));
       }
+      if (data.questions) {
+        setGameData(prev => ({ ...prev, questions: data.questions }));
+      }
+      if (data.penaltyTime) {
+        setGameData(prev => ({ ...prev, penaltyTime: data.penaltyTime }));
+      }
     });
 
     socket.on('game:hole-cards', (data) => {

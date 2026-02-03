@@ -4,6 +4,7 @@ import { useSocket } from '../contexts/SocketContext';
 import { useGame } from '../contexts/GameContext';
 import DeadDrawPoker from '../games/DeadDrawPoker';
 import DrawingGame from '../games/DrawingGame';
+import MultiplyMadness from '../games/MultiplyMadness';
 
 export default function Game() {
   const navigate = useNavigate();
@@ -48,6 +49,8 @@ export default function Game() {
       return <DeadDrawPoker {...gameProps} />;
     case 'drawing-game':
       return <DrawingGame {...gameProps} />;
+    case 'multiply-madness':
+      return <MultiplyMadness {...gameProps} />;
     default:
       return (
         <div className="page page-center">
