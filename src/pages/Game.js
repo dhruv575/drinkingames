@@ -8,20 +8,20 @@ import MultiplyMadness from '../games/MultiplyMadness';
 
 export default function Game() {
   const navigate = useNavigate();
-  const { player, lobby } = useSocket();
+  const { player, lobby, isReconnecting } = useSocket();
   const { currentGame, endGame } = useGame();
 
   useEffect(() => {
-    if (!lobby) {
+    if (!lobby && !isReconnecting) {
       navigate('/');
     }
-  }, [lobby, navigate]);
+  }, [lobby, isReconnecting, navigate]);
 
   useEffect(() => {
-    if (lobby && !currentGame) {
+    if (lobby && !currentGame && !isReconnecting) {
       navigate('/lobby');
     }
-  }, [lobby, currentGame, navigate]);
+  }, [lobby, currentGame, isReconnecting, navigate]);
 
   if (!lobby || !player || !currentGame) {
     return null;

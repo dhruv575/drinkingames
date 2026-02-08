@@ -4,7 +4,7 @@ import { useSocket } from './SocketContext';
 const GameContext = createContext(null);
 
 export function GameProvider({ children }) {
-  const { socket, setLobby } = useSocket();
+  const { socket, setLobby, reconnectGameState, setReconnectGameState } = useSocket();
   const [currentGame, setCurrentGame] = useState(null);
   const [gamePhase, setGamePhase] = useState(null);
   const [gameData, setGameData] = useState({});
@@ -109,6 +109,39 @@ export function GameProvider({ children }) {
       socket.off('game:ended');
     };
   }, [socket, setLobby]);
+
+  // Restore game state after reconnection
+  useEffect(() => {
+    if (!reconnectGameState) return;
+
+    const { gameId, phase, results, ...rest } = reconnectGameState;
+
+    if (gameId) {
+      setCurrentGame(gameId);
+    }
+    if (phase) {
+      setGamePhase(phase);
+    }
+    if (results) {
+      setResults(results);
+    }
+
+    // Restore game-specific data
+    const gameData = {};
+    if (rest.timeLimit !== undefined) gameData.timeLimit = rest.timeLimit;
+    if (rest.word) gameData.word = rest.word;
+    if (rest.questions) gameData.questions = rest.questions;
+    if (rest.penaltyTime !== undefined) gameData.penaltyTime = rest.penaltyTime;
+    if (rest.holeCards) gameData.holeCards = rest.holeCards;
+    if (rest.communityCards) gameData.communityCards = rest.communityCards;
+    if (rest.currentDrawing) gameData.currentDrawing = rest.currentDrawing;
+
+    if (Object.keys(gameData).length > 0) {
+      setGameData(gameData);
+    }
+
+    setReconnectGameState(null);
+  }, [reconnectGameState, setReconnectGameState]);
 
   const startGame = useCallback((gameId) => {
     return new Promise((resolve, reject) => {

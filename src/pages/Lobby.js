@@ -8,14 +8,14 @@ import './Lobby.css';
 
 export default function Lobby() {
   const navigate = useNavigate();
-  const { player, lobby, leaveLobby } = useSocket();
+  const { player, lobby, leaveLobby, isReconnecting } = useSocket();
   const { availableGames, currentGame, startGame } = useGame();
 
   useEffect(() => {
-    if (!lobby) {
+    if (!lobby && !isReconnecting) {
       navigate('/');
     }
-  }, [lobby, navigate]);
+  }, [lobby, isReconnecting, navigate]);
 
   useEffect(() => {
     if (currentGame) {

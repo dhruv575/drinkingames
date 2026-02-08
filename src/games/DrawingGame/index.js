@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useGame } from '../../contexts/GameContext';
 import Header from '../../components/Header';
 import Timer from '../../components/Timer';
@@ -114,9 +114,10 @@ export default function DrawingGame({ player, lobby, isHost, onEndGame }) {
     }
   };
 
-  const handleSubmitDrawing = async () => {
+  const handleSubmitDrawing = useCallback(async () => {
     if (drawingSubmitted) return;
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const drawing = canvas.toDataURL('image/png');
     try {
       await sendGameAction('submit-drawing', { drawing });
@@ -124,7 +125,7 @@ export default function DrawingGame({ player, lobby, isHost, onEndGame }) {
     } catch (err) {
       console.error('Failed to submit drawing:', err);
     }
-  };
+  }, [drawingSubmitted, sendGameAction]);
 
   const handleVote = async (voteType) => {
     if (!gameData.currentDrawing) return;
@@ -201,7 +202,7 @@ export default function DrawingGame({ player, lobby, isHost, onEndGame }) {
             </div>
 
             {gameData.timeLimit && (
-              <Timer key="drawing" duration={gameData.timeLimit} label="Time remaining" />
+              <Timer key="drawing" duration={gameData.timeLimit} label="Time remaining" onComplete={handleSubmitDrawing} />
             )}
 
             <div className="color-picker">

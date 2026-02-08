@@ -11,7 +11,7 @@ export default function MultiplyMadness({ player, lobby, isHost, onEndGame }) {
   const [wrong, setWrong] = useState(0);
   const [feedback, setFeedback] = useState(null); // 'correct' | 'wrong' | null
   const [isPenalty, setIsPenalty] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(45);
+  const [timeLeft, setTimeLeft] = useState(15);
   const [gameEnded, setGameEnded] = useState(false);
   const [scoreSubmitted, setScoreSubmitted] = useState(false);
   const inputRef = useRef(null);

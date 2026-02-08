@@ -14,6 +14,8 @@ export function SocketProvider({ children }) {
   const [player, setPlayer] = useState(null);
   const [lobby, setLobby] = useState(null);
   const [error, setError] = useState(null);
+  const [isReconnecting, setIsReconnecting] = useState(() => !!sessionStorage.getItem('drinkgames_session'));
+  const [reconnectGameState, setReconnectGameState] = useState(null);
 
   useEffect(() => {
     const newSocket = io(SOCKET_URL, {
@@ -27,6 +29,33 @@ export function SocketProvider({ children }) {
       console.log('Connected to server');
       setIsConnected(true);
       setError(null);
+
+      // Attempt reconnection if session data exists
+      const sessionData = sessionStorage.getItem('drinkgames_session');
+      if (sessionData) {
+        try {
+          const { playerId, lobbyCode } = JSON.parse(sessionData);
+          newSocket.emit('player:reconnect', { playerId, lobbyCode }, (response) => {
+            if (response.success) {
+              console.log('Reconnected to lobby:', lobbyCode);
+              setPlayer(response.player);
+              setLobby(response.lobby);
+              if (response.gameState) {
+                setReconnectGameState(response.gameState);
+              }
+            } else {
+              console.log('Reconnect failed, clearing session:', response.error);
+              sessionStorage.removeItem('drinkgames_session');
+            }
+            setIsReconnecting(false);
+          });
+        } catch (e) {
+          sessionStorage.removeItem('drinkgames_session');
+          setIsReconnecting(false);
+        }
+      } else {
+        setIsReconnecting(false);
+      }
     });
 
     newSocket.on('disconnect', () => {
@@ -53,6 +82,14 @@ export function SocketProvider({ children }) {
       setLobby(data.lobby);
     });
 
+    newSocket.on('lobby:player-disconnected', (data) => {
+      setLobby(data.lobby);
+    });
+
+    newSocket.on('lobby:player-reconnected', (data) => {
+      setLobby(data.lobby);
+    });
+
     setSocket(newSocket);
 
     return () => {
@@ -75,6 +112,11 @@ export function SocketProvider({ children }) {
           setPlayer(response.player);
           setLobby(response.lobby);
           setError(null);
+          sessionStorage.setItem('drinkgames_session', JSON.stringify({
+            playerId: response.player.id,
+            username: response.player.username,
+            lobbyCode: response.lobby.code
+          }));
           resolve(response);
         }
       });
@@ -96,6 +138,11 @@ export function SocketProvider({ children }) {
           setPlayer(response.player);
           setLobby(response.lobby);
           setError(null);
+          sessionStorage.setItem('drinkgames_session', JSON.stringify({
+            playerId: response.player.id,
+            username: response.player.username,
+            lobbyCode: response.lobby.code
+          }));
           resolve(response);
         }
       });
@@ -112,6 +159,7 @@ export function SocketProvider({ children }) {
       socket.emit('lobby:leave', () => {
         setPlayer(null);
         setLobby(null);
+        sessionStorage.removeItem('drinkgames_session');
         resolve();
       });
     });
@@ -128,6 +176,9 @@ export function SocketProvider({ children }) {
     joinLobby,
     leaveLobby,
     clearError: () => setError(null),
+    isReconnecting,
+    reconnectGameState,
+    setReconnectGameState,
   };
 
   return (
