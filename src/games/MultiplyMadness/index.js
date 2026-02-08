@@ -112,6 +112,12 @@ export default function MultiplyMadness({ player, lobby, isHost, onEndGame }) {
     }
   };
 
+  const focusInput = () => {
+    if (inputRef.current && !isPenalty && !gameEnded) {
+      inputRef.current.focus();
+    }
+  };
+
   const renderGame = () => {
     if (!currentQuestion) {
       return <div className="phase-content"><p>Loading questions...</p></div>;
@@ -120,7 +126,7 @@ export default function MultiplyMadness({ player, lobby, isHost, onEndGame }) {
     const progress = ((currentIndex + 1) / questions.length) * 100;
 
     return (
-      <div className="phase-content">
+      <div className="phase-content" onClick={focusInput}>
         <div className="game-stats">
           <div className="stat">
             <span className="stat-value time">{timeLeft}</span>
@@ -146,7 +152,19 @@ export default function MultiplyMadness({ player, lobby, isHost, onEndGame }) {
             <span className="operator">×</span>
             <span className="num">{currentQuestion.b}</span>
             <span className="equals">=</span>
-            <span className="answer-display">{answer || '??'}</span>
+            <input
+              ref={inputRef}
+              type="tel"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              className="answer-input"
+              value={answer}
+              onChange={handleAnswerChange}
+              disabled={isPenalty || gameEnded}
+              placeholder="??"
+              autoFocus
+              maxLength={2}
+            />
           </div>
 
           {feedback === 'correct' && (
@@ -162,19 +180,7 @@ export default function MultiplyMadness({ player, lobby, isHost, onEndGame }) {
           )}
         </div>
 
-        <input
-          ref={inputRef}
-          type="tel"
-          inputMode="numeric"
-          pattern="[0-9]*"
-          className="hidden-input"
-          value={answer}
-          onChange={handleAnswerChange}
-          disabled={isPenalty || gameEnded}
-          autoFocus
-        />
-
-        <p className="hint">Type your 2-digit answer</p>
+        <p className="hint">Tap above and type your answer</p>
       </div>
     );
   };

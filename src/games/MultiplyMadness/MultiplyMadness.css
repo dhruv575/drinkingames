@@ -124,11 +124,29 @@
   margin-left: 0.5rem;
 }
 
-.answer-display {
-  min-width: 2ch;
+/* Visible inline answer input */
+.answer-input {
+  width: 2.5ch;
+  font-size: 3rem;
+  font-weight: 700;
   color: var(--primary);
+  background: transparent;
+  border: none;
   border-bottom: 3px solid var(--primary);
-  padding: 0 0.25rem;
+  text-align: center;
+  padding: 0;
+  outline: none;
+  caret-color: var(--primary);
+  font-family: inherit;
+}
+
+.answer-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.answer-input:disabled {
+  opacity: 0.6;
 }
 
 .feedback {
@@ -151,15 +169,6 @@
   font-size: 0.875rem;
   color: var(--text-muted);
   animation: pulse 1s infinite;
-}
-
-/* Hidden input for capturing keyboard/numpad */
-.hidden-input {
-  position: absolute;
-  opacity: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
 }
 
 .hint {
