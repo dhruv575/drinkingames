@@ -1,0 +1,313 @@
+.queens-game {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+.queens-game .game-content {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.queens-game .phase-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Timer and status bar */
+.queens-game .game-stats {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--surface);
+  border-radius: 12px;
+}
+
+.queens-game .stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.queens-game .stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.queens-game .stat-value.time {
+  color: var(--primary);
+}
+
+.queens-game .stat-value.solved-count {
+  color: var(--success);
+}
+
+.queens-game .stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Grid */
+.queens-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 1;
+  border: 2px solid var(--text-muted);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.queens-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background-color 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.queens-cell:active {
+  filter: brightness(0.85);
+}
+
+/* Region border classes - thick borders between different regions */
+.queens-cell.border-top-thick {
+  border-top: 2.5px solid var(--text);
+}
+
+.queens-cell.border-bottom-thick {
+  border-bottom: 2.5px solid var(--text);
+}
+
+.queens-cell.border-left-thick {
+  border-left: 2.5px solid var(--text);
+}
+
+.queens-cell.border-right-thick {
+  border-right: 2.5px solid var(--text);
+}
+
+/* Queen icon */
+.queen-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+  animation: queenPlace 0.2s ease;
+}
+
+@keyframes queenPlace {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Submit button */
+.queens-game .submit-btn {
+  width: 100%;
+  max-width: 360px;
+  padding: 0.875rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  background: var(--primary);
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.queens-game .submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.queens-game .submit-btn:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+/* Feedback */
+.queens-game .feedback-msg {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  min-height: 1.5rem;
+}
+
+.queens-game .feedback-msg.incorrect {
+  color: var(--danger);
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+/* Solved banner */
+.queens-game .solved-banner {
+  width: 100%;
+  max-width: 360px;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--success), #15803d);
+  border-radius: 12px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.queens-game .solved-banner h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.queens-game .solved-banner p {
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+/* Solved players list */
+.queens-game .solved-list {
+  width: 100%;
+  max-width: 360px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Results */
+.queens-game .results-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.5s ease;
+  padding-bottom: 2rem;
+  width: 100%;
+}
+
+.queens-game .result-banner {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+}
+
+.queens-game .result-banner.loser {
+  background: linear-gradient(135deg, var(--danger), #b91c1c);
+}
+
+.queens-game .result-banner.safe {
+  background: linear-gradient(135deg, var(--success), #15803d);
+}
+
+.queens-game .result-banner h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.queens-game .loser-section {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.queens-game .loser-section h3 {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.queens-game .loser-names {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.queens-game .all-scores {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.queens-game .all-scores h3 {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.queens-game .score-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: var(--surface-light);
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.queens-game .score-result:last-child {
+  margin-bottom: 0;
+}
+
+.queens-game .score-result.loser {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid var(--danger);
+}
+
+.queens-game .score-result.is-you {
+  border: 1px solid var(--primary);
+}
+
+.queens-game .score-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.queens-game .score-player {
+  font-weight: 500;
+}
+
+.queens-game .score-detail {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.queens-game .score-value {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.queens-game .score-value.solved {
+  color: var(--success);
+}
+
+.queens-game .score-value.not-solved {
+  color: var(--danger);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

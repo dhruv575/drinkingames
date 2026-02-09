@@ -5,6 +5,7 @@ import { useGame } from '../contexts/GameContext';
 import DeadDrawPoker from '../games/DeadDrawPoker';
 import DrawingGame from '../games/DrawingGame';
 import MultiplyMadness from '../games/MultiplyMadness';
+import Queens from '../games/Queens';
 
 export default function Game() {
   const navigate = useNavigate();
@@ -51,6 +52,8 @@ export default function Game() {
       return <DrawingGame {...gameProps} />;
     case 'multiply-madness':
       return <MultiplyMadness {...gameProps} />;
+    case 'queens':
+      return <Queens {...gameProps} />;
     default:
       return (
         <div className="page page-center">

@@ -44,6 +44,9 @@ export function GameProvider({ children }) {
       if (data.penaltyTime) {
         setGameData(prev => ({ ...prev, penaltyTime: data.penaltyTime }));
       }
+      if (data.grid) {
+        setGameData(prev => ({ ...prev, grid: data.grid }));
+      }
     });
 
     socket.on('game:hole-cards', (data) => {
@@ -84,6 +87,13 @@ export function GameProvider({ children }) {
       }));
     });
 
+    socket.on('game:player-solved', (data) => {
+      setGameData(prev => ({
+        ...prev,
+        solvedPlayers: [...(prev.solvedPlayers || []), data]
+      }));
+    });
+
     socket.on('game:results', (data) => {
       setResults(data);
     });
@@ -105,6 +115,7 @@ export function GameProvider({ children }) {
       socket.off('game:word-submitted');
       socket.off('game:drawing-submitted');
       socket.off('game:show-drawing');
+      socket.off('game:player-solved');
       socket.off('game:results');
       socket.off('game:ended');
     };
@@ -135,6 +146,9 @@ export function GameProvider({ children }) {
     if (rest.holeCards) gameData.holeCards = rest.holeCards;
     if (rest.communityCards) gameData.communityCards = rest.communityCards;
     if (rest.currentDrawing) gameData.currentDrawing = rest.currentDrawing;
+    if (rest.grid) gameData.grid = rest.grid;
+    if (rest.solvedPlayers) gameData.solvedPlayers = rest.solvedPlayers;
+    if (rest.solved !== undefined) gameData.solved = rest.solved;
 
     if (Object.keys(gameData).length > 0) {
       setGameData(gameData);
